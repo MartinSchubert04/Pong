@@ -5,12 +5,11 @@
 
 namespace Pong {
 
-class Bot {
-
+class Player {
 public:
-    Bot(Paddle paddle) : _paddle(paddle) {};
+    Player(Paddle paddle) : _paddle(paddle) {};
 
-    void update(Ball &ball, DeltaTime dt);
+    void update(DeltaTime dt);
     void draw();
 
     void addPoints(int amount) { _points += amount; }
@@ -23,3 +22,4 @@ private:
 };
 
 }
+

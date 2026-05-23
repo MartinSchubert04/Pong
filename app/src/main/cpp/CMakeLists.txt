@@ -33,6 +33,8 @@ list(APPEND SOURCES
         "${CMAKE_SOURCE_DIR}/Pong/Ball.cpp"
         "${CMAKE_SOURCE_DIR}/Pong/Paddle.cpp"
         "${CMAKE_SOURCE_DIR}/Pong/Bot.cpp"
+        "${CMAKE_SOURCE_DIR}/Pong/Player.cpp"
+        "${CMAKE_SOURCE_DIR}/Pong/World.cpp"
 )
 
 # Define compiler macros for the library

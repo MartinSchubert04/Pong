@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Bot.h"
+#include "World.h"
 
 namespace Pong {
 
@@ -16,13 +17,16 @@ Application::Application() {
 
 
 void Application::run() {
+    World world;
+
     Ball ball = {{_window.x / 2, _window.y / 2}, 20.0f};
 
-    Paddle p1 = {{_window.x / 2, (_window.y / 4) * 3}, {200.f, 25.f}, {0,0}};
-    Paddle paddle = {{_window.x / 2, (_window.y / 4)}, {200.f, 25.f}, {0,0}};
-    Bot bot = {paddle};
+    Paddle paddle1 = {{_window.x / 2, (_window.y / 4) * 3}, {200.f, 25.f}, {0,0}};
+    Player p = {paddle1};
 
-    int p1Points = 0;
+    Paddle paddle2 = {{_window.x / 2, (_window.y / 4)}, {200.f, 25.f}, {0,0}};
+    Bot bot = {paddle2};
+
     int p2Points = 0;
 
     while(!WindowShouldClose()) {
@@ -33,27 +37,25 @@ void Application::run() {
         BeginDrawing();
 
         int fontSize = 150;
-        const char *text = TextFormat("%i | %i", p1Points, p2Points);
+        const char *text = TextFormat("%i | %i", p.getPoints(), bot.getPoints());
         auto textSize = (float)MeasureText(text, fontSize);
         DrawText(text, (int)(_window.x / 2 - textSize / 2), _window.y / 2 - fontSize / 2, fontSize, {245, 245, 245, 80});
 
+//        int fontSize2 = 40;
+//        const char *text2 = TextFormat("Speed x:%.1f y: %.1f", ball.getSpeed().x, ball.getSpeed().y);
+//        auto textSize2 = (float)MeasureText(text2, fontSize2);
+//        DrawText(text2, (int)(_window.x / 2 - textSize2 / 2), (_window.y / 2 - fontSize2 / 2) - fontSize, fontSize2, {245, 245, 245, 80});
+
         ball.update(dt);
-        p1.update(dt);
-        bot.update(ball);
+        p.update(dt);
+        bot.update(ball, dt);
+        world.collisionBorder(ball, p, bot);
+        world.collisionBallPaddle(ball, p.getPaddle());
+        world.collisionBallPaddle(ball, bot.getPaddle());
 
         ball.draw();
-        p1.draw();
+        p.draw();
         bot.draw();
-
-        if (ball.getPos().y + ball.getRadius() >= _window.y){
-            p2Points += 1;
-            ball.reset();
-        }
-        if (ball.getPos().y - ball.getRadius() <= 0) {
-            p1Points += 1;
-            ball.reset();
-        }
-
 
 
         EndDrawing();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raymob.h"
+#include "raymath.h"
 #include <cstdint>
 #include <random>
 

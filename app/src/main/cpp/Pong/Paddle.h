@@ -15,7 +15,13 @@ public:
 
     void draw();
 
+    void setX(const float x) { _pos.x = x; }
+    void setSpeed(const Vector2 &speed) { _speed = speed; }
+
+
     Vector2 &getPos() { return _pos; }
+    Vector2 &getSpeed() { return _speed; }
+    Vector2 &getSize() { return _size; }
 
 
 private:

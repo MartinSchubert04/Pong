@@ -37,7 +37,8 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew updateLintBaseline
-          ./gradlew build
+          ./gradlew assembleDebug assembleRelease
+#          ./gradlew build
 
       - name: Upload debug APKs
         uses: actions/upload-artifact@v7

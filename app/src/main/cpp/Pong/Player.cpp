@@ -1,20 +1,19 @@
-#include "Bot.h"
+#include "Player.h"
 
 namespace Pong {
 
-void Bot::update(Ball &ball, DeltaTime dt) {
+void Player::update(DeltaTime dt) {
   float prevX = _paddle.getPos().x;
-
-  _paddle.getPos().x = ball.getPos().x - _paddle.getSize().x / 2;
+  auto pos = (float) GetTouchX() - _paddle.getSize().x / 2;
+  _paddle.setX(pos);
   _paddle.update(dt);
 
   _paddle.setSpeed({(_paddle.getPos().x - prevX) / dt.getSeconds(),
                      0.0f });
 }
 
-void Bot::draw() {
+void Player::draw() {
   _paddle.draw();
 }
 
 }
-

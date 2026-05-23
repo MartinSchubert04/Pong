@@ -8,9 +8,16 @@ Paddle::Paddle(Vector2 pos, Vector2 size, Vector2 speed, Color color)
 }
 
 void Paddle::update(DeltaTime dt) {
-  _pos.x = (float)GetTouchX();
+  Vector2 prevPos = _pos;
+
   auto width = (float)GetScreenWidth();
-  if (_pos.x + _size.x >= width) _pos.x = width - _size.x;
+  if (_pos.x + _size.x > width) _pos.x = width - _size.x;
+  if (_pos.x < 0) _pos.x = 0;
+
+  _speed = {
+          (_pos.x - prevPos.x) / dt.getSeconds(),
+          (_pos.y - prevPos.y) / dt.getSeconds()
+  };
 }
 
 void Paddle::draw() {
